@@ -31,8 +31,9 @@ Instructions for the local server:
 4) Run "node index.js"
 5) The server will start with the message "Listening on port 3000!"
 
-Server API:
+## Server API:
 - http://localhost:3000/login
+```
    Request: 
      Method: POST 
 	 Body: {
@@ -41,11 +42,12 @@ Server API:
 		   }
    Response:
 	- {"success": true}
-	
+```	
 	If the username and password are correct (username: admin, password: admin) you will get success:true.
 	If the username and password are incorrect or the request is invalid you will get success:false.
-
+	
 - http://localhost:3000/data?length=10
+```
    Request: 
      Method: GET 
    Response:
@@ -75,7 +77,7 @@ Server API:
 		 ]
 	   }
 	]
-     
+```  
 	The response will be an array of objects with a random length between 50 and 100 (without the length parameter). 
 	If you specify the length parameter the array will have the length you specify.
 	
