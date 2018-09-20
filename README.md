@@ -43,8 +43,9 @@ Instructions for the local server:
    Response:
 	- {"success": true}
 ```	
-	If the username and password are correct (username: admin, password: admin) you will get success:true.
-	If the username and password are incorrect or the request is invalid you will get success:false.
+
+If the username and password are correct (username: admin, password: admin) you will get success:true.
+If the username and password are incorrect or the request is invalid you will get success:false.
 	
 - http://localhost:3000/data?length=10
 ```
@@ -78,13 +79,14 @@ Instructions for the local server:
 	   }
 	]
 ```  
-	The response will be an array of objects with a random length between 50 and 100 (without the length parameter). 
-	If you specify the length parameter the array will have the length you specify.
-	
-	The date property will be a date in the ISO string format.
-	The objectId property will be a random string with a length of 22 chars.
-	The data property will be an array of elements with a random length between 0 and 100.
-	Each data element will have two properties: 
-		- value which will be a random number between 0 and 100 
-		- type that will be one of the values [0,1,2].
-	
+
+The response will be an array of objects with a random length between 50 and 100 (without the length parameter). 
+If you specify the length parameter the array will have the length you specify.
+
+The date property will be a date in the ISO string format.
+The objectId property will be a random string with a length of 22 chars.
+The data property will be an array of elements with a random length between 0 and 100.
+Each data element will have two properties: 
+	- value which will be a random number between 0 and 100 
+	- type that will be one of the values [0,1,2].
+
