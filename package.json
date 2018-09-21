@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start:server": "node src/server/index.js",
-    "start:ui": "ng serve"
+    "start:ui": "ng serve --open"
   },
   "private": true,
   "dependencies": {
