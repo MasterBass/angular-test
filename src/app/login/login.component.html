@@ -1,3 +1,12 @@
-<p>
-  login works!
-</p>
+<div>
+    <h2>LOGIN</h2>
+    <p>{{message}}</p>
+
+    <div *ngIf="!authService.isLoggedIn">
+        <input #login (keyup)="validate(login.value)" />
+        <input type="password" [(ngModel)]="password" />
+        <button (click)="logIn(login.value)">Login</button>
+    </div>
+    <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
+
+</div>
