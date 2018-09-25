@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
+import { AlertModule } from 'ngx-bootstrap';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './items/items.component';
 import { LoginComponent } from './login/login.component';
@@ -20,7 +23,9 @@ import { AuthService } from './auth.service';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AlertModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
