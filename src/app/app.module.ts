@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AlertModule } from 'ngx-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './items/items.component';
@@ -25,7 +27,9 @@ import { AuthService } from './auth.service';
     AppRoutingModule,
     HttpClientModule,
     AlertModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
