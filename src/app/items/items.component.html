@@ -23,7 +23,7 @@
   <button (click)="load()" class="btn btn-primary">Load</button>
 </form>
 
-<table class="table table-striped">
+<table class="table table-striped main">
   <thead>
   <tr>
     <th scope="col">#</th>
@@ -32,7 +32,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let el of elements" (click)="openModal(template)">
+  <tr *ngFor="let el of elements" (click)="openModal(template, el.objectId)">
     <th scope="row">{{el.objectId}}</th>
     <td>{{el.dateShortPresentation}}</td>
     <td>type 0: {{el.typeZero}}<br/>type 1: {{el.typeOne}}<br/>type 2: {{el.typeTwo}}</td>
@@ -42,12 +42,25 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
+    <h4 class="modal-title pull-left">{{selectedElement.objectId}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    This is a modal.
+    <table class="table table-striped items">
+      <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of selectedElement.data">
+        <td>{{item.type}}</td>
+        <td>{{item.value}}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </ng-template>

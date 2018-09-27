@@ -14,8 +14,9 @@ import {Element} from '../element';
 })
 export class ItemsComponent {
   elements: Element[];
-  searchCriteria: SearchCriteria = new SearchCriteria(200);
+  searchCriteria: SearchCriteria = new SearchCriteria(20);
   modalRef: BsModalRef;
+  selectedElement: Element;
 
 
     constructor(
@@ -43,7 +44,8 @@ export class ItemsComponent {
       });
     });
   }
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>, objectId: string) {
+      this.selectedElement = this.elements.filter(x => x.objectId === objectId)[0];
       this.modalRef = this.modalService.show(template);
   }
 }

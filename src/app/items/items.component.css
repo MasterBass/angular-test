@@ -2,8 +2,11 @@
     height: 50px;
 }
 
-table {
+table.main {
     margin-top: 30px;
+}
+table.items {
+    margin-top: -17px;
 }
 
 tr {
