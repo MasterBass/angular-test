@@ -6,6 +6,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import {SearchCriteria} from '../search-criteria';
 import {ElementService} from '../element.service';
 import {Element} from '../element';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-items',
@@ -17,16 +18,25 @@ export class ItemsComponent {
   searchCriteria: SearchCriteria = new SearchCriteria(20);
   modalRef: BsModalRef;
   selectedElement: Element;
+  message: string;
+  isLoading: boolean;
 
 
     constructor(
         private elementService: ElementService,
-        private modalService: BsModalService) {}
+        private modalService: BsModalService,
+        public authService: AuthService) {
+        this.message = '';
+        this.isLoading = false;
+    }
 
   load(): void {
+    this.message = '';
+    this.isLoading = true;
     this.elementService.getElements(this.searchCriteria.rowLimit).
     subscribe(els => {
       this.elements = els;
+      this.isLoading = false;
       if (this.searchCriteria.startDate) {
         this.elements = this.elements.filter(el => {
           const cDate = new Date(el.date);
@@ -40,6 +50,8 @@ export class ItemsComponent {
               return cDate <= this.searchCriteria.endDate;
           });
       }
+
+      this.message = `${this.elements.length} elements received`;
 
       this.elements.forEach(el => {
         let zero = 0;
@@ -65,4 +77,11 @@ export class ItemsComponent {
       });
       this.modalRef = this.modalService.show(template);
   }
+
+    logout() {
+        this.authService.logout();
+    }
+
+
+
 }

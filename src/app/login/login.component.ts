@@ -14,7 +14,7 @@ export class LoginComponent {
   message: string;
 
   constructor(public authService: AuthService, public router: Router) {
-      this.message = "";
+      this.message = '';
   }
     onSubmit() {
         this.authService.login(this.login, this.password).subscribe(() => {
