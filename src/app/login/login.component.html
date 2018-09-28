@@ -1,16 +1,42 @@
 <div id="first-block"></div>
-<!--<alert type="success">{{message}}</alert>-->
+<alert *ngIf="message.length > 0" type="warning">{{message}}</alert>
 
-<form  *ngIf="!authService.isLoggedIn">
+<form  *ngIf="!authService.isLoggedIn" (ngSubmit)="onSubmit()" #authForm="ngForm">
     <div class="form-group" >
         <label for="login">Login</label>
-        <input type="text" class="form-control" id="login" required
-               #login name="login" (keyup)="validate(login.value)">
+        <input type="text" class="form-control" id="login" required minlength="4" appLettersOnly="bobrik"
+               [(ngModel)]="login" name="login" #loginControl="ngModel">
+        <div *ngIf="loginControl.invalid && (loginControl.dirty || loginControl.touched)"
+             class="alert alert-danger">
+
+            <div *ngIf="loginControl.errors.required">
+                Login is required.
+            </div>
+            <div *ngIf="loginControl.errors.minlength">
+                Login must be at least 5 characters long.
+            </div>
+            <div *ngIf="loginControl.errors.lettersOnly">
+                Letters only allowed
+            </div>
+
+        </div>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" class="form-control" name="password"
-               [(ngModel)]="password" >
+               minlength="5" required
+               [(ngModel)]="password" #passControl="ngModel">
+        <div *ngIf="passControl.invalid && (passControl.dirty || passControl.touched)"
+             class="alert alert-danger">
+
+            <div *ngIf="passControl.errors.required">
+                Password is required.
+            </div>
+            <div *ngIf="passControl.errors.minlength">
+                Password must be at least 5 characters long.
+            </div>
+
+        </div>
     </div>
-    <button (click)="logIn(login.value)" class="btn btn-primary">Login</button>
+    <button class="btn btn-primary" [disabled]="!authForm.form.valid">Login</button>
 </form>

@@ -27,7 +27,21 @@ export class ItemsComponent {
     this.elementService.getElements(this.searchCriteria.rowLimit).
     subscribe(els => {
       this.elements = els;
-      els.forEach(el => {
+      if (this.searchCriteria.startDate) {
+        this.elements = this.elements.filter(el => {
+          const cDate = new Date(el.date);
+          return cDate >= this.searchCriteria.startDate;
+        });
+      }
+
+      if (this.searchCriteria.endDate) {
+          this.elements = this.elements.filter(el => {
+              const cDate = new Date(el.date);
+              return cDate <= this.searchCriteria.endDate;
+          });
+      }
+
+      this.elements.forEach(el => {
         let zero = 0;
         let one = 0;
         let two = 0;
@@ -46,6 +60,9 @@ export class ItemsComponent {
   }
   openModal(template: TemplateRef<any>, objectId: string) {
       this.selectedElement = this.elements.filter(x => x.objectId === objectId)[0];
+      this.selectedElement.data = this.selectedElement.data.sort((a, b) => {
+          return (a.type > b.type) ? 1 : ((b.type > a.type) ? -1 : 0);
+      });
       this.modalRef = this.modalService.show(template);
   }
 }
