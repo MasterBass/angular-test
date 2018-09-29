@@ -40,6 +40,7 @@ export class ItemsComponent {
   load(): void {
     this.message = '';
     this.elementsOnPage = [];
+    this.isLoadMoreBtnShow = false;
     this.currentPage = 0;
     if (this.searchCriteria.endDate && (this.searchCriteria.startDate >= this.searchCriteria.endDate)) {
         this.errorMessage = 'end Date in the filter should be bigger than start Date';
