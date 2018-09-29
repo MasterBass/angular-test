@@ -4,6 +4,7 @@
   </li>
 </ul>
 <alert *ngIf="message.length > 0" type="info">{{message}}</alert>
+<alert *ngIf="errorMessage.length > 0" type="danger">{{errorMessage}}</alert>
 <form>
   <div class="form-group" >
     <label for="rows-limit">Rows Limit</label>

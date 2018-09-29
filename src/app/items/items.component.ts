@@ -19,19 +19,28 @@ export class ItemsComponent {
   modalRef: BsModalRef;
   selectedElement: Element;
   message: string;
+  errorMessage: string;
   isLoading: boolean;
 
 
-    constructor(
-        private elementService: ElementService,
-        private modalService: BsModalService,
-        public authService: AuthService) {
-        this.message = '';
-        this.isLoading = false;
-    }
+  constructor(
+    private elementService: ElementService,
+    private modalService: BsModalService,
+    public authService: AuthService) {
+    this.message = '';
+    this.errorMessage = '';
+    this.isLoading = false;
+  }
 
   load(): void {
     this.message = '';
+
+    if (this.searchCriteria.endDate && (this.searchCriteria.startDate >= this.searchCriteria.endDate)) {
+        this.errorMessage = 'end Date in the filter should be bigger than start Date';
+        return;
+    } else {
+        this.errorMessage = '';
+    }
     this.isLoading = true;
     this.elementService.getElements(this.searchCriteria.rowLimit).
     subscribe(els => {
@@ -70,6 +79,7 @@ export class ItemsComponent {
       });
     });
   }
+
   openModal(template: TemplateRef<any>, objectId: string) {
       this.selectedElement = this.elements.filter(x => x.objectId === objectId)[0];
       this.selectedElement.data = this.selectedElement.data.sort((a, b) => {
@@ -78,10 +88,7 @@ export class ItemsComponent {
       this.modalRef = this.modalService.show(template);
   }
 
-    logout() {
-        this.authService.logout();
-    }
-
-
-
+  logout() {
+      this.authService.logout();
+  }
 }
