@@ -15,13 +15,16 @@ import {AuthService} from '../auth.service';
 })
 export class ItemsComponent {
   elements: Element[];
-  searchCriteria: SearchCriteria = new SearchCriteria(20);
+  elementsOnPage: Element[];
+  searchCriteria: SearchCriteria = new SearchCriteria(2000);
   modalRef: BsModalRef;
   selectedElement: Element;
   message: string;
   errorMessage: string;
   isLoading: boolean;
-
+  currentPage: number;
+  pageSize: number;
+  isLoadMoreBtnShow: boolean;
 
   constructor(
     private elementService: ElementService,
@@ -30,11 +33,14 @@ export class ItemsComponent {
     this.message = '';
     this.errorMessage = '';
     this.isLoading = false;
+    this.isLoadMoreBtnShow = false;
+    this.pageSize = 100;
   }
 
   load(): void {
     this.message = '';
-
+    this.elementsOnPage = [];
+    this.currentPage = 0;
     if (this.searchCriteria.endDate && (this.searchCriteria.startDate >= this.searchCriteria.endDate)) {
         this.errorMessage = 'end Date in the filter should be bigger than start Date';
         return;
@@ -46,6 +52,7 @@ export class ItemsComponent {
     subscribe(els => {
       this.elements = els;
       this.isLoading = false;
+
       if (this.searchCriteria.startDate) {
         this.elements = this.elements.filter(el => {
           const cDate = new Date(el.date);
@@ -61,23 +68,35 @@ export class ItemsComponent {
       }
 
       this.message = `${this.elements.length} elements received`;
-
-      this.elements.forEach(el => {
-        let zero = 0;
-        let one = 0;
-        let two = 0;
-        el.data.forEach(item => {
-            if (item.type === 0) { zero++; }
-            if (item.type === 1) { one++; }
-            if (item.type === 2) { two++; }
-        });
-        el.typeZero = zero;
-        el.typeOne = one;
-        el.typeTwo = two;
-        const dateObject = new Date(el.date);
-        el.dateShortPresentation = dateObject.toLocaleDateString('en-US');
-      });
+      this.loadMore();
     });
+  }
+
+  loadMore() {
+      for (let i = 0; i < this.pageSize; i++) {
+          if (this.elements.length > this.currentPage * this.pageSize + i) {
+              this.elementsOnPage.push(this.handleElement(this.elements[this.currentPage * this.pageSize + i]));
+          }
+      }
+      this.isLoadMoreBtnShow = this.currentPage * this.pageSize + this.pageSize < this.elements.length;
+      this.currentPage ++;
+  }
+
+  handleElement(el: Element) {
+      let zero = 0;
+      let one = 0;
+      let two = 0;
+      el.data.forEach(item => {
+          if (item.type === 0) { zero++; }
+          if (item.type === 1) { one++; }
+          if (item.type === 2) { two++; }
+      });
+      el.typeZero = zero;
+      el.typeOne = one;
+      el.typeTwo = two;
+      const dateObject = new Date(el.date);
+      el.dateShortPresentation = dateObject.toLocaleDateString('en-US');
+      return el;
   }
 
   openModal(template: TemplateRef<any>, objectId: string) {

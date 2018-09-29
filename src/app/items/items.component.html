@@ -34,13 +34,15 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let el of elements" (click)="openModal(template, el.objectId)">
+  <tr *ngFor="let el of elementsOnPage" (click)="openModal(template, el.objectId)">
     <th scope="row">{{el.objectId}}</th>
     <td>{{el.dateShortPresentation}}</td>
     <td>type 0: {{el.typeZero}}<br/>type 1: {{el.typeOne}}<br/>type 2: {{el.typeTwo}}</td>
   </tr>
   </tbody>
 </table>
+<button *ngIf="isLoadMoreBtnShow" (click)="loadMore()" [disabled]="isLoading"
+        class="btn btn-link">Load more...</button>
 
 <ng-template #template>
   <div class="modal-header">
